@@ -7,7 +7,7 @@ Choose the algorithm you want to see and click sort\
 Change the size of array, by typing an number in text field\
 Click stop if you want to\
 Click compare if you want to keep arrays the same for each algorithm so you can compare\
-For radix and counting sort, red bars means that element was accessed. I added this because otherwise, it wouldn’t be clear what the algorithm was doing, and it would just instantly sort the array.
+For radix and counting sort, red bars means that element was accessed. I added this because otherwise, it wouldn’t be clear what the algorithm was doing, and it would just somewhat instantly sort the array.
 
 ## Counting Sort
 Essentially counting sort takes in values to be sorted and count the occurrences in an auxiliary array with the index corresponding to the actual value. The size of the auxiliary depends on the range, or highest value of the array.\
