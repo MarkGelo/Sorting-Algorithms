@@ -1,7 +1,7 @@
 # Sorting-Algorithms
-Java GUI that allows the user to specify the algorithm and the size of the array to sort. Can also compare each algorith by ticking the 'compare' box. This will keep the array the same for each algorithm and the user can see the differences in the amount of swaps, animations, and the amount of time taken.
-| [Counting](#Counting-Sort) | [Radix](#Radix-Sort) | [Heap](#Heap-Sort) |
-| [Quick](#Quick-Sort) | [Insertion](#Insertion-Sort) | [Merge](#Merge-Sort) |
+Java GUI that allows the user to specify the algorithm and the size of the array to sort. Can also compare each algorith by ticking the 'compare' box. This will keep the array the same for each algorithm and the user can see the differences in the amount of swaps, animations, and the amount of time taken.\
+[Counting](#Counting-Sort) - [Radix](#Radix-Sort) - [Heap](#Heap-Sort) - [Quick](#Quick-Sort) - [Insertion](#Insertion-Sort) - [Merge](#Merge-Sort) - [Selection](#Selection-Sort) - [Bubble](#Bubble-Sort) - [Shell](#Shell-Sort) - [Pigeonhole](#Pigeonhole-Sort) - [Brick](#Brick-Sort) - [Pancake](#Pancake-Sort) - [Cycle](#Cycle-Sort) - [Cocktail](#Cocktail-Sort) - [Comb](#Comb-Sort) - [Bogo](#Bogo-Sort) - [Gnome](#Gnome-Sort) - [Stooge](#Stooge-Sort)
+
 ## Instructions
 Run window.java\
 Choose the algorithm you want to see and click sort\
