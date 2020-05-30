@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class sortingAlgorithm {
@@ -13,7 +14,9 @@ public class sortingAlgorithm {
     long timeElapsed;
     //ararylist for the animation
     private ArrayList<paintIntegers[]> sorting = new ArrayList<paintIntegers[]>(n * n);
-    String[] algos = {"Insertion" , "Merge", "Heap", "Quick", "Radix", "Counting"};
+    String[] algos = {  "Insertion" , "Merge", "Heap", "Quick", "Radix", "Counting",
+                        "Selection", "Bubble", "Shell", "Pigeonhole", "Brick", "Pancake",
+                        "Cycle", "Cocktail",  "Comb", "Bogo", "Gnome", "Stooge"};
 
     public sortingAlgorithm(){ //inits arrays and algos
         randomArray(n);
@@ -36,6 +39,30 @@ public class sortingAlgorithm {
             radixSort();
         }else if(algo.equals("Counting")){
             countingSort();
+        }else if(algo.equals("Selection")){
+            selectionSort();
+        }else if(algo.equals("Bubble")){
+            bubbleSort();
+        }else if(algo.equals("Shell")){
+            shellSort();
+        }else if(algo.equals("Pigeonhole")){
+            pigeonHoleSort();
+        }else if(algo.equals("Cycle")){
+            cycleSort();
+        }else if(algo.equals("Cocktail")){
+            cocktailSort();
+        }else if(algo.equals("Comb")){
+            combSort();
+        }else if(algo.equals("Bogo")){
+            bogoSort();
+        }else if(algo.equals("Gnome")){
+            gnomeSort();
+        }else if(algo.equals("Stooge")){
+            stoogeSort();
+        }else if(algo.equals("Brick")){
+            brickSort();
+        }else if(algo.equals("Pancake")){
+            pancakeSort();
         }else{
             System.out.println("Tf u doing");
         }
@@ -45,7 +72,376 @@ public class sortingAlgorithm {
         return sorting;
     }
 
-    public void insertionSort(){
+
+    private void pancakeSort() {
+        sorting.clear(); // clear arraylist
+        toSort = paintIntegers.deepCopy(origArray);
+
+        for(int size = toSort.length; size > 1; size--){
+            //find max
+            int max = findMax(size);
+
+            //move max to end of current sized array
+            if(max != size - 1){
+                //move max to beginning
+                flip(max);
+
+                //move max to end by reversing current arr
+                flip(size - 1);
+            }
+        }
+    }
+
+    private void flip(int i) { // reverses array from 0 to i --max
+        int start = 0;
+        while(start < i){
+            int temp = toSort[start].val;
+            toSort[start].val = toSort[i].val;
+            toSort[i].val = temp;
+            start++;
+            i--;
+            sorting.add(paintIntegers.deepCopy(toSort));
+        }
+    }
+
+    private int findMax(int size) {
+        int max, i;
+        for(max = 0, i = 0; i < size; i++){
+            if(toSort[i].val > toSort[max].val){
+                max = i;
+            }
+        }
+        return max;
+    }
+
+    private void brickSort() {
+        sorting.clear(); // clear arraylist
+        toSort = paintIntegers.deepCopy(origArray);
+
+        boolean sorted = false;
+        while(!sorted){
+            sorted = true;
+
+            //bubble sort odd indices
+            for(int i = 1; i <= toSort.length - 2; i += 2){
+                if(toSort[i].val > toSort[i + 1].val){
+                    int temp = toSort[i].val;
+                    toSort[i].val = toSort[i + 1].val;
+                    toSort[i + 1].val = temp;
+                    sorted = false;
+                    sorting.add(paintIntegers.deepCopy(toSort));
+                }
+            }
+
+            //bubble sort on even indices
+            for(int i = 0; i <= toSort.length - 2; i += 2){
+                if(toSort[i].val > toSort[i + 1].val){
+                    int temp = toSort[i].val;
+                    toSort[i].val = toSort[i + 1].val;
+                    toSort[i + 1].val = temp;
+                    sorted = false;
+                    sorting.add(paintIntegers.deepCopy(toSort));
+                }
+            }
+        }
+    }
+
+    private void stoogeSort() {
+        sorting.clear(); // clear arraylist
+        toSort = paintIntegers.deepCopy(origArray);
+        stoogeSortHelper(0, toSort.length - 1);
+    }
+
+    private void stoogeSortHelper(int start, int end) {
+        if(start >= end)
+            return;
+        
+        //first greater than last -- swap
+        if(toSort[start].val > toSort[end].val){
+            int temp = toSort[start].val;
+            toSort[start].val = toSort[end].val;
+            toSort[end].val = temp;
+            sorting.add(paintIntegers.deepCopy(toSort));
+        }
+
+        //more than 2 elems in array
+        if(end - start + 1 > 2){
+            int temp = (end - start + 1) / 3;
+
+            //recursively sort first 2/3
+            stoogeSortHelper(start, end - temp);
+
+            //last 2/3
+            stoogeSortHelper(start + temp, end);
+
+            //again first 2/3 to confirm?
+            stoogeSortHelper(start, end - temp);
+        }
+    }
+
+    private void gnomeSort() {
+        sorting.clear(); // clear arraylist
+        toSort = paintIntegers.deepCopy(origArray);
+
+        int idx = 0;
+        while(idx < toSort.length){
+            //show where the gnome is at
+            toSort[idx].col = Color.red;
+            sorting.add(paintIntegers.deepCopy(toSort));
+            toSort[idx].col = Color.black;
+            //gnome rules
+            if(idx == 0)
+                idx++;
+            if(toSort[idx].val >= toSort[idx - 1].val){
+                idx++;
+            }else{
+                int temp = 0;
+                temp = toSort[idx].val;
+                toSort[idx].val = toSort[idx - 1].val;
+                toSort[idx - 1].val = temp;
+                idx--;
+                sorting.add(paintIntegers.deepCopy(toSort));
+            }
+        }
+    }
+
+    private void bogoSort() {
+        sorting.clear(); // clear arraylist
+        toSort = paintIntegers.deepCopy(origArray);
+        int i = 0;
+        while(!isSorted(toSort)){
+            toSort = shuffle(toSort);
+            sorting.add(paintIntegers.deepCopy(toSort));
+            i++;
+            if(i == 1000) // after 1000 iterations, should stop
+                break;
+        }
+    }
+
+    private void combSort() {
+        sorting.clear(); // clear arraylist
+        toSort = paintIntegers.deepCopy(origArray);
+        int gap = toSort.length; // gap to sort with
+        boolean swap = true;
+
+        //keep running while gap >= 1 and there was a swap
+        while(gap != 1 || swap){
+            swap = false;
+            //get next gap
+            int tempGap = (gap * 10) / 13;
+            if(tempGap < 1)
+                gap = 1;
+            else
+                gap = tempGap;
+            
+            //sort with gap
+            for(int i = 0; i < toSort.length - gap; i++){
+                if(toSort[i].val > toSort[i + gap].val){
+                    //swap
+                    int temp = toSort[i].val;
+                    toSort[i].val = toSort[i + gap].val;
+                    toSort[i + gap].val = temp;
+                    swap = true;
+                    sorting.add(paintIntegers.deepCopy(toSort));
+                }
+            }
+        }
+    }
+
+    private void cocktailSort() {
+        sorting.clear(); // clear arraylist
+        toSort = paintIntegers.deepCopy(origArray);
+        boolean swap = true;
+        int start = 0;
+        int end = toSort.length; // cuz the end will be sorted so can decrement
+        while(swap){
+            swap = false;
+
+            //bubble sort - bottom to top
+            for(int i = start; i < end - 1; i++){
+                if(toSort[i].val > toSort[i + 1].val){
+                    //swap
+                    int temp = toSort[i].val;
+                    toSort[i].val = toSort[i + 1].val;
+                    toSort[i + 1].val = temp;
+                    swap = true;
+                    sorting.add(paintIntegers.deepCopy(toSort));
+                }
+            }
+
+            //if still false then break, cuz already sorted
+            if(!swap)
+                break;
+            
+            end--; //end is sorted so decrement
+            
+            //bubble sort - top to bottom
+            for(int i = end - 1; i >= start; i--){
+                if(toSort[i].val > toSort[i + 1].val){
+                    //swap
+                    int temp = toSort[i].val;
+                    toSort[i].val = toSort[i + 1].val;
+                    toSort[i + 1].val = temp;
+                    swap = true;
+                    sorting.add(paintIntegers.deepCopy(toSort));
+                }
+            }
+
+            //increment start cuz sorted for that index
+            start++;
+        }
+    }
+
+    private void cycleSort() {
+        sorting.clear(); //clear arraylist
+        toSort = paintIntegers.deepCopy(origArray);
+        //iterate and put on right place
+        for(int start = 0; start <= toSort.length - 2; start++){
+            int item = toSort[start].val;
+
+            //find position to correctly put the current item
+            int position = start;
+            for(int i = start + 1; i < toSort.length; i++){
+                if(toSort[i].val < item){
+                    position++;
+                }
+            }
+            if(position == start) //already correct position
+                continue;
+            
+            //if duplicate
+            while(item == toSort[position].val)
+                position++;
+            
+            //put in correct position
+            if(position != start){
+                int temp = item;
+                item = toSort[position].val;
+                toSort[position].val = temp;
+                sorting.add(paintIntegers.deepCopy(toSort));
+            }
+
+            //rotate rest of cycle
+            while(position != start){
+                position = start;
+
+                //find position to put element
+                for(int i = start + 1; i < toSort.length; i++){
+                    if(toSort[i].val < item){
+                        position++;
+                    }
+                }
+
+                //ignore duplicate
+                while(item == toSort[position].val){
+                    position++;
+                }
+
+                //put item in correct position
+                if(item != toSort[position].val){
+                    int temp = item;
+                    item = toSort[position].val;
+                    toSort[position].val = temp;
+                    sorting.add(paintIntegers.deepCopy(toSort));
+                }
+            }
+        }
+    }
+
+    private void pigeonHoleSort() {
+        sorting.clear(); //clear arraylist
+        toSort = paintIntegers.deepCopy(origArray);
+        //find min max
+        int min = toSort[0].val;
+        int max = toSort[0].val;
+        for(int i = 0; i < toSort.length; i ++){
+            if(toSort[i].val > max){
+                max = toSort[i].val;
+            }
+            if(toSort[i].val < min){
+                min = toSort[i].val;
+            }
+            toSort[i].col = Color.red;// adds color to show its accessing those, so not instantly sorts
+            sorting.add(paintIntegers.deepCopy(toSort));
+            toSort[i].col = Color.black;
+        }
+        //set pigeonhole
+        int range = max - min + 1;
+        int[] pigeonhole = new int[range];
+        Arrays.fill(pigeonhole, 0); // fill pigeonhole with 0s
+
+        //put elements in pigeonhole
+        for(int i = 0; i < toSort.length; i++){
+            pigeonhole[toSort[i].val - min]++;
+            toSort[i].col = Color.red; // adds color to show its accessing those, so not instantly sorts
+            sorting.add(paintIntegers.deepCopy(toSort));
+            toSort[i].col = Color.black;
+        }
+
+        //update array with sorted values
+        int index = 0;
+        for(int i = 0; i < range; i++){
+            while(pigeonhole[i] != 0){
+                toSort[index++].val = i + min;
+                pigeonhole[i]--;
+                sorting.add(paintIntegers.deepCopy(toSort));
+            }
+        }
+    }
+
+    private void shellSort() {
+        sorting.clear(); //clear arraylist
+        toSort = paintIntegers.deepCopy(origArray);
+        for(int gap = toSort.length / 2; gap >= 1; gap /= 2){//gap starts from half of size, and keeps halving till its 1
+            //insertion sort with the gap
+            for(int i = gap; i < toSort.length; i++){
+                int current = toSort[i].val;
+                int j; // so can reference it outside for loop
+                for(j = i; j >= gap && toSort[j - gap].val > current; j -= gap){
+                    toSort[j].val = toSort[j - gap].val;
+                    sorting.add(paintIntegers.deepCopy(toSort));
+                }
+                toSort[j].val = current;
+                sorting.add(paintIntegers.deepCopy(toSort));
+            }
+        }
+    }
+
+    private void bubbleSort() {
+        sorting.clear(); // clear arraylist
+        toSort = paintIntegers.deepCopy(origArray);
+        for(int i = 0; i < toSort.length - 1; i++){ //iterate over array
+            for(int j = 0; j < toSort.length - i - 1; j++){ // i onwards, swaps adjacent elements if not in order
+                if(toSort[j+1].val < toSort[j].val){
+                    //swaps
+                    int temp = toSort[j].val;
+                    toSort[j].val = toSort[j+1].val;
+                    toSort[j+1].val = temp;
+                    sorting.add(paintIntegers.deepCopy(toSort)); // add to animation
+                }
+            }
+        }
+    }
+
+    private void selectionSort() {
+        sorting.clear(); //clear arraylist to reset
+        toSort = paintIntegers.deepCopy(origArray);
+        for(int i = 0; i < toSort.length - 1; i++){ // iterate over array minus last element
+            int min_idx = i;
+            for(int j = i + 1; j < toSort.length; j++){ // finds minimum from i onwards
+                if(toSort[j].val < toSort[min_idx].val){
+                    min_idx = j;
+                }
+            }
+            //swaps
+            int temp = toSort[min_idx].val;
+            toSort[min_idx].val = toSort[i].val;
+            toSort[i].val = temp;
+            sorting.add(paintIntegers.deepCopy(toSort));
+        }
+    }
+
+    public void insertionSort() {
         sorting.clear(); // clears the arraylist - to reset
         toSort = paintIntegers.deepCopy(origArray); // resets the array to sort
         for(int i = 1; i < toSort.length; i++){//iterates over the array
@@ -390,6 +786,33 @@ public class sortingAlgorithm {
         origArray = arrayNew.clone();
     }
 
+    public paintIntegers[] shuffle(paintIntegers[] arr){ //fisher yates shuffle
+        //makes a new array
+        paintIntegers[] arrayNew = new paintIntegers[arr.length];
+        paintIntegers.initPaint(arrayNew);
+        //updates n
+        n = arr.length;
+        for(int i = 0; i < arrayNew.length; i++){
+            arrayNew[i].val = i + 1;
+        }//init the array with 0 to n;
+        for(int i = 0; i < arrayNew.length; i++){ // shuffles the array
+            //random index past current -> thats why random
+            int ridx = i + rand.nextInt(arrayNew.length - i);
+            //swap values
+            int temp = arrayNew[ridx].val;
+            arrayNew[ridx].val = arrayNew[i].val;
+            arrayNew[i].val = temp;
+        }
+        // new origarray array
+        return arrayNew.clone();
+    }
+    public boolean isSorted(paintIntegers[] arr){
+        for(int i = 1; i < arr.length; i++){
+            if(arr[i].val < arr[i - 1].val)
+                return false;
+        }
+        return true;
+    }
     private void print(){
         for(int i = 0; i < toSort.length; i++){
             System.out.print(toSort[i].val + ", ");
