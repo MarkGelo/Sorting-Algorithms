@@ -1,6 +1,7 @@
 # Sorting-Algorithms
 Java GUI that allows the user to specify the algorithm and the size of the array to sort. Can also compare each algorith by ticking the 'compare' box. This will keep the array the same for each algorithm and the user can see the differences in the amount of swaps, animations, and the amount of time taken.
-
+| [Counting](#Counting-Sort) | [Radix](#Radix-Sort) | [Heap](#Heap-Sort) |
+| [Quick](#Quick-Sort) | [Insertion](#Insertion-Sort) | [Merge](#Merge-Sort) |
 ## Instructions
 Run window.java\
 Choose the algorithm you want to see and click sort\
@@ -111,7 +112,7 @@ Time complexity is O(rng)
 ![](images/bogo1.png)
 
 ## Gnome Sort
-Gnome sorts pots with the following rules\
+Gnome sorts pots with the following rules
 1. Looks at the pot next to him and the previous. If in right order, steps one pot forward, otherwise swaps and steps one pot backwards.
 2. If at starting point of line, steps forward.
 3. If at end of the pot line, pots have been sorted.
@@ -119,7 +120,7 @@ Time complexit is O(n^2)
 ![](images/gnome1.png)
 
 ## Stooge Sort
-Recursive sorting algorithm\
+Recursive sorting algorithm
 1. If value at starting index is greater than value at last index, swap
 2. Recursively, stooge sort the first 2/3 of array, then last 2/3, then first 2/3 again to confirm.
 Time complexity is O(n^(log3/log1.5))
